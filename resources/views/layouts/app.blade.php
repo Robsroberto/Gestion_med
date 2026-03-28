@@ -6,52 +6,73 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Gestion Med') — Services Médicaux</title>
 
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
-    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         body { font-family: 'Nunito', sans-serif; background: #f8f9fc; }
         .navbar-brand { font-weight: 800; font-size: 1.3rem; }
-        .footer { background: #4e73df; color: #fff; padding: 1rem 0; margin-top: 3rem; }
+        .navbar-brand i { color: rgba(255,255,255,0.85); }
+        .footer-main {
+            background: linear-gradient(135deg, #4e73df, #36b9cc);
+            color: rgba(255,255,255,0.88);
+            padding: 1.2rem 0;
+            margin-top: 3rem;
+        }
+        .alert { border-radius: 12px; border: none; }
+        @stack('styles')
     </style>
+    @stack('head')
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <i class="fas fa-hospital-alt mr-2"></i>Gestion Med
+            <i class="fas fa-hospital-alt me-2"></i>Gestion Med
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-                    <a class="nav-link" href="/">Accueil</a>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('/') ? 'active fw-bold' : '' }}" href="/">Accueil</a>
                 </li>
-                <li class="nav-item {{ request()->is('services*') ? 'active' : '' }}">
-                    <a class="nav-link" href="/services">Services</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('services*') ? 'active fw-bold' : '' }}" href="/services">
+                        <i class="fas fa-stethoscope me-1"></i>Services
+                    </a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto align-items-center gap-2">
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Connexion</a>
+                        <a class="nav-link" href="{{ route('login') }}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Connexion
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Inscription</a>
+                        <a href="{{ route('register') }}" class="btn btn-light btn-sm px-3 rounded-pill fw-bold text-primary">
+                            <i class="fas fa-user-plus me-1"></i>S'inscrire
+                        </a>
                     </li>
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">
-                            <i class="fas fa-tachometer-alt mr-1"></i>Mon espace
+                            <i class="fas fa-tachometer-alt me-1"></i>Mon espace
                         </a>
                     </li>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
+                            <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                                <i class="fas fa-sign-out-alt me-1"></i>Déconnexion
+                            </button>
                         </form>
                     </li>
                 @endguest
@@ -62,29 +83,32 @@
 
 <div class="container mt-4">
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
     @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            {{ session('error') }}
-            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
 
     @yield('content')
 </div>
 
-<footer class="footer text-center mt-5">
+<footer class="footer-main text-center mt-5">
     <div class="container">
-        <p class="mb-0">&copy; {{ date('Y') }} Gestion Med — Système de Réservation de Services Médicaux</p>
+        <p class="mb-0">
+            <i class="fas fa-hospital-alt me-2"></i>
+            &copy; {{ date('Y') }} <strong>Gestion Med</strong> — Système de Réservation de Services Médicaux
+        </p>
     </div>
 </footer>
 
-<script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @stack('scripts')
 </body>
 </html>
