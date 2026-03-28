@@ -8,7 +8,17 @@ use App\Http\Controllers\Admin;
  | Routes publiques
  ---------------------------------------------------*/
 Route::get('/', function () {
-    return view('welcome');
+    $services = \App\Models\Service::with('medecin')
+        ->where('statut', 'actif')
+        ->take(6)
+        ->get();
+    $stats = [
+        'services'     => \App\Models\Service::count(),
+        'medecins'     => \App\Models\User::where('role', 'medecin')->count(),
+        'patients'     => \App\Models\User::where('role', 'patient')->count(),
+        'reservations' => \App\Models\Reservation::count(),
+    ];
+    return view('welcome', compact('services', 'stats'));
 });
 
 Route::get('/services', [C\ServiceController::class, 'index']);
