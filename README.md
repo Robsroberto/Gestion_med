@@ -81,12 +81,13 @@ L'application est disponible sur **http://localhost:8000**
 
 Après `php artisan migrate:fresh --seed`, les comptes suivants sont disponibles :
 
-| Rôle | Email | Mot de passe |
-|---|---|---|
-| Admin | admin@gestionmed.ci | password |
-| Médecin 1 | dr.konan@gestionmed.ci | password |
-| Médecin 2 | dr.bamba@gestionmed.ci | password |
-| Patient | patient@gestionmed.ci | password |
+| Rôle | Nom | Email | Mot de passe |
+|---|---|---|---|
+| Admin | Admin Principal | admin@gestionmed.ci | password |
+| Médecin 1 | Dr. Konan Akissi | dr.konan@gestionmed.ci | password |
+| Médecin 2 | Dr. Bamba Oumar | dr.bamba@gestionmed.ci | password |
+| Patient 1 | Moussa Traoré | patient@gestionmed.ci | password |
+| Patient 2 | Aminata Koné | patient2@gestionmed.ci | password |
 
 ---
 

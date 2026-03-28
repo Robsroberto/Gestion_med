@@ -15,7 +15,7 @@ class DemoSeeder extends Seeder
         // --- Admin ---
         $admin = User::create([
             'name'     => 'Admin Principal',
-            'email'    => 'admin@demo.com',
+            'email'    => 'admin@gestionmed.ci',
             'role'     => 'admin',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
@@ -23,16 +23,16 @@ class DemoSeeder extends Seeder
 
         // --- Médecins ---
         $med1 = User::create([
-            'name'     => 'Dr. Alpha Diallo',
-            'email'    => 'medecin1@demo.com',
+            'name'     => 'Dr. Konan Akissi',
+            'email'    => 'dr.konan@gestionmed.ci',
             'role'     => 'medecin',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
 
         $med2 = User::create([
-            'name'     => 'Dr. Fatou Ndiaye',
-            'email'    => 'medecin2@demo.com',
+            'name'     => 'Dr. Bamba Oumar',
+            'email'    => 'dr.bamba@gestionmed.ci',
             'role'     => 'medecin',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
@@ -41,7 +41,7 @@ class DemoSeeder extends Seeder
         // --- Patients ---
         $pat1 = User::create([
             'name'     => 'Moussa Traoré',
-            'email'    => 'patient1@demo.com',
+            'email'    => 'patient@gestionmed.ci',
             'role'     => 'patient',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
@@ -49,7 +49,7 @@ class DemoSeeder extends Seeder
 
         $pat2 = User::create([
             'name'     => 'Aminata Koné',
-            'email'    => 'patient2@demo.com',
+            'email'    => 'patient2@gestionmed.ci',
             'role'     => 'patient',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
