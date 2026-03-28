@@ -47,7 +47,7 @@ Elle intègre :
 
 ```bash
 # 1. Cloner le dépôt
-git clone https://github.com/VOTRE_USERNAME/gestion-med.git
+git clone https://github.com/Robsroberto/Gestion_med.git
 cd gestion-med
 
 # 2. Installer les dépendances PHP
