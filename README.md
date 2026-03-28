@@ -1,59 +1,358 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏥 Gestion Med — Système de Réservation de Services Médicaux
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Projet fil rouge — TechnoWeb Back-End | Laravel 11 + API REST v1 (Sanctum)
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Description
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Gestion Med** est une application web de gestion de rendez-vous médicaux développée avec **Laravel 11**.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Elle intègre :
+- Un **front-end complet** avec template Bootstrap 5 (vitrine, espace patient, médecin, admin)
+- Une **API REST v1** complète, sécurisée avec **Laravel Sanctum**, testable avec Postman
 
-## Learning Laravel
+### Rôles disponibles
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+| Rôle | Accès |
+|---|---|
+| **Patient** | Voir les services, réserver un créneau, annuler ses réservations |
+| **Médecin** | Voir ses services assignés, gérer les statuts des réservations |
+| **Admin** | CRUD services, gestion des utilisateurs et de toutes les réservations |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ⚙️ Stack technique
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Technologie | Usage |
+|---|---|
+| **Laravel 11** | Framework PHP back-end |
+| **MySQL** | Base de données relationnelle |
+| **Laravel Sanctum** | Authentification API par token |
+| **Bootstrap 5** | UI front-end (pages publiques) |
+| **SB Admin 2** | Template dashboard (Bootstrap 4) |
+| **Font Awesome 6** | Icônes |
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 Installation — Démarrage rapide
 
-## Contributing
+### Prérequis
+- PHP >= 8.2
+- Composer
+- MySQL
+- Node.js & npm
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Étapes
 
-## Code of Conduct
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/VOTRE_USERNAME/gestion-med.git
+cd gestion-med
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 2. Installer les dépendances PHP
+composer install
 
-## Security Vulnerabilities
+# 3. Configurer l'environnement
+cp .env.example .env
+php artisan key:generate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 4. Configurer la base de données dans .env
+#    DB_DATABASE=reservation_app
+#    DB_USERNAME=root
+#    DB_PASSWORD=
 
-## License
+# 5. Créer la base de données MySQL
+#    Depuis phpMyAdmin OU :
+mysql -u root -e "CREATE DATABASE reservation_app CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 6. Lancer les migrations + données de démonstration
+php artisan migrate:fresh --seed
+
+# 7. Démarrer le serveur
+php artisan serve
+```
+
+L'application est disponible sur **http://localhost:8000**
+
+---
+
+## 👤 Comptes de démonstration
+
+Après `php artisan migrate:fresh --seed`, les comptes suivants sont disponibles :
+
+| Rôle | Email | Mot de passe |
+|---|---|---|
+| Admin | admin@gestionmed.ci | password |
+| Médecin 1 | dr.konan@gestionmed.ci | password |
+| Médecin 2 | dr.bamba@gestionmed.ci | password |
+| Patient | patient@gestionmed.ci | password |
+
+---
+
+## 🗂️ Structure du projet
+
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Api/V1/               ← Contrôleurs API REST
+│   │   │   ├── AuthApiController.php
+│   │   │   ├── ServiceApiController.php
+│   │   │   ├── ReservationApiController.php
+│   │   │   └── AdminApiController.php
+│   │   ├── Admin/                ← Contrôleurs interface admin web
+│   │   ├── AuthController.php
+│   │   ├── DashboardController.php
+│   │   ├── MedecinController.php
+│   │   ├── ReservationController.php
+│   │   └── ServiceController.php
+│   └── Middleware/
+│       └── RoleMiddleware.php    ← Contrôle d'accès par rôle
+├── Models/
+│   ├── User.php
+│   ├── Service.php
+│   └── Reservation.php
+database/
+├── migrations/
+└── seeders/
+    └── DemoSeeder.php
+resources/views/
+├── welcome.blade.php             ← Page vitrine (Bootstrap 5)
+├── layouts/
+│   ├── app.blade.php             ← Layout public (Bootstrap 5)
+│   └── admin.blade.php           ← Layout dashboard (SB Admin 2)
+├── auth/                         ← Login, Register
+├── dashboard/                    ← Dashboards par rôle
+├── admin/                        ← Gestion admin
+├── medecin/                      ← Espace médecin
+├── reservations/                 ← Espace patient
+└── services/                     ← Catalogue services
+routes/
+├── web.php                       ← Routes front-end
+└── api.php                       ← Routes API v1
+postman_collection.json           ← Collection Postman prête à l'emploi
+```
+
+---
+
+## 🌐 Routes Web
+
+```
+GET  /                           → Page vitrine
+GET  /services                   → Liste des services (public)
+GET  /services/{id}              → Détail d'un service (public)
+GET  /login                      → Formulaire connexion
+POST /login                      → Authentification
+GET  /register                   → Formulaire inscription
+POST /register                   → Création de compte
+POST /logout                     → Déconnexion
+
+── Patient (authentifié) ──
+GET  /mes-reservations           → Mes réservations
+GET  /reservation/{id}/create    → Formulaire de réservation
+POST /reservation/store          → Enregistrer une réservation
+POST /reservation/{id}/cancel    → Annuler une réservation
+
+── Médecin (authentifié) ──
+GET  /medecin/services           → Mes services assignés
+GET  /medecin/reservations       → Réservations de mes patients
+POST /medecin/reservations/{id}/update-status
+
+── Admin (authentifié) ──
+GET  /admin/services             → Gestion des services
+GET  /admin/reservations         → Toutes les réservations
+GET  /admin/users                → Gestion des utilisateurs
+```
+
+---
+
+## 🔌 API REST v1
+
+> **Base URL :** `http://localhost:8000/api/v1`
+> **Header requis :** `Accept: application/json`
+> **Authentification :** `Authorization: Bearer {token}` (obtenu après `/login`)
+
+### Endpoints publics (sans token)
+
+| Méthode | Endpoint | Description |
+|---|---|---|
+| `GET` | `/services` | Liste des services actifs |
+| `GET` | `/services/{id}` | Détail d'un service |
+| `POST` | `/register` | Inscription → retourne un token |
+| `POST` | `/login` | Connexion → retourne un token |
+
+### Authentifiés (tous rôles)
+
+| Méthode | Endpoint | Description |
+|---|---|---|
+| `POST` | `/logout` | Déconnexion (invalide le token) |
+| `GET` | `/me` | Infos de l'utilisateur connecté |
+
+### Patient uniquement
+
+| Méthode | Endpoint | Description |
+|---|---|---|
+| `GET` | `/reservations` | Mes réservations |
+| `POST` | `/reservations` | Créer une réservation |
+| `POST` | `/reservations/{id}/cancel` | Annuler une réservation |
+
+### Médecin uniquement
+
+| Méthode | Endpoint | Description |
+|---|---|---|
+| `GET` | `/medecin/services` | Mes services |
+| `GET` | `/medecin/reservations` | Réservations de mes patients |
+| `POST` | `/medecin/reservations/{id}/update-status` | Changer le statut |
+
+### Admin uniquement
+
+| Méthode | Endpoint | Description |
+|---|---|---|
+| `GET` | `/admin/services` | Tous les services |
+| `POST` | `/admin/services` | Créer un service |
+| `PUT` | `/admin/services/{id}` | Modifier un service |
+| `DELETE` | `/admin/services/{id}` | Supprimer un service |
+| `POST` | `/admin/services/{id}/assign` | Assigner un médecin |
+| `GET` | `/admin/reservations` | Toutes les réservations |
+| `POST` | `/admin/reservations/{id}/cancel` | Annuler |
+| `GET` | `/admin/users` | Tous les utilisateurs |
+| `POST` | `/admin/users/{id}/set-role` | Changer le rôle |
+| `POST` | `/admin/users/{id}/toggle` | Activer / désactiver |
+
+---
+
+## 📬 Tester l'API avec Postman
+
+### Étape 1 — Importer la collection
+
+Importez le fichier **`postman_collection.json`** dans Postman
+*(File → Import → sélectionner le fichier)*
+
+### Étape 2 — Configurer la variable d'environnement
+
+Créez un environnement Postman avec la variable :
+
+| Variable | Valeur initiale |
+|---|---|
+| `base_url` | `http://localhost:8000/api/v1` |
+| `token` | *(laissez vide, sera rempli après login)* |
+
+### Étape 3 — Workflow de test
+
+```
+1. POST {{base_url}}/register   → Créer un compte
+2. POST {{base_url}}/login      → Se connecter (copier le token)
+3. Coller le token dans la variable d'environnement "token"
+4. GET  {{base_url}}/services   → Tester sans auth
+5. GET  {{base_url}}/me         → Tester avec auth
+6. POST {{base_url}}/reservations → Réserver un service
+7. GET  {{base_url}}/reservations → Voir mes réservations
+8. POST {{base_url}}/logout      → Se déconnecter
+```
+
+### Exemples de requêtes
+
+**Inscription :**
+```json
+POST /api/v1/register
+{
+    "name": "Jean Dupont",
+    "email": "jean@exemple.com",
+    "password": "password",
+    "password_confirmation": "password"
+}
+```
+
+**Réponse :**
+```json
+{
+    "message": "Inscription réussie.",
+    "user": { "id": 10, "name": "Jean Dupont", "email": "...", "role": "patient" },
+    "token": "1|abc123..."
+}
+```
+
+**Créer une réservation :**
+```json
+POST /api/v1/reservations
+Authorization: Bearer 1|abc123...
+
+{
+    "service_id": 1,
+    "date_reservation": "2026-04-15",
+    "heure_reservation": "09:30",
+    "commentaire": "Consultation de routine"
+}
+```
+
+---
+
+## 📊 Modèle de données
+
+```
+users
+├── id, name, email, password
+├── role  → admin | medecin | patient
+└── timestamps
+
+services
+├── id, titre, description, prix, duree (minutes)
+├── statut  → actif | inactif
+├── medecin_id → users.id
+└── timestamps
+
+reservations
+├── id
+├── user_id    → users.id  (patient)
+├── service_id → services.id
+├── date_reservation, heure_reservation
+├── statut  → en_attente | confirmee | annulee | effectuee
+├── commentaire (nullable)
+└── timestamps
+```
+
+---
+
+## 🔐 Sécurité
+
+- **Session** pour le front-end (Laravel Auth native)
+- **Token Bearer** pour l'API (Laravel Sanctum)
+- **`RoleMiddleware`** sur toutes les routes protégées
+- **Validation** des données à chaque requête
+- **Protection CSRF** sur tous les formulaires
+
+---
+
+## 📦 Commandes utiles
+
+```bash
+# Réinitialiser la BDD avec les données de démo
+php artisan migrate:fresh --seed
+
+# Lister toutes les routes
+php artisan route:list
+
+# Lister les routes API uniquement
+php artisan route:list --path=api
+
+# Vider les caches
+php artisan cache:clear && php artisan config:clear && php artisan view:clear
+```
+
+---
+
+## 🎓 Pour aller plus loin
+
+Ce projet constitue la **base back-end** à consommer par un front-end JavaScript.
+
+Prochaines étapes suggérées :
+1. ✅ Tester toutes les routes API avec Postman
+2. 🔑 Comprendre le token Bearer (Sanctum) et son cycle de vie
+3. 🖥️ Créer un front-end (Vue 3 / React / Vanilla JS) qui consomme cette API
+4. 💾 Gérer le token en `localStorage` côté client
+5. 🔄 Gérer les états (`en_attente`, `confirmee`, etc.) dans l'UI
+
+---
+
+*Projet réalisé dans le cadre du cours TechnoWeb Back-End.*

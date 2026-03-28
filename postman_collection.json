@@ -1,0 +1,449 @@
+{
+  "info": {
+    "name": "Gestion Med — API v1",
+    "_postman_id": "gestion-med-api-v1",
+    "description": "Collection complète pour tester l'API REST du projet Gestion Med.\n\n**Workflow recommandé :**\n1. Créer un compte (register)\n2. Se connecter (login) → copier le token\n3. Coller le token dans la variable d'environnement `token`\n4. Tester les autres endpoints\n\n**Variables d'environnement :**\n- `base_url` : http://localhost:8000/api/v1\n- `token` : (rempli après login)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000/api/v1", "type": "string" },
+    { "key": "token", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "🔓 Public — Sans authentification",
+      "item": [
+        {
+          "name": "Liste des services",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/services", "host": ["{{base_url}}"], "path": ["services"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Détail d'un service",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": { "raw": "{{base_url}}/services/1", "host": ["{{base_url}}"], "path": ["services", "1"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔐 Authentification",
+      "item": [
+        {
+          "name": "Inscription (register)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) {",
+                  "  pm.collectionVariables.set('token', json.token);",
+                  "  console.log('Token sauvegardé :', json.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Jean Dupont\",\n    \"email\": \"jean.dupont@exemple.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/register", "host": ["{{base_url}}"], "path": ["register"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Connexion (login)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) {",
+                  "  pm.collectionVariables.set('token', json.token);",
+                  "  console.log('Token sauvegardé :', json.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"patient@gestionmed.ci\",\n    \"password\": \"password\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/login", "host": ["{{base_url}}"], "path": ["login"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Connexion Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) {",
+                  "  pm.collectionVariables.set('token', json.token);",
+                  "  console.log('Token admin sauvegardé :', json.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@gestionmed.ci\",\n    \"password\": \"password\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/login", "host": ["{{base_url}}"], "path": ["login"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Connexion Médecin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) {",
+                  "  pm.collectionVariables.set('token', json.token);",
+                  "  console.log('Token médecin sauvegardé :', json.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"dr.konan@gestionmed.ci\",\n    \"password\": \"password\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/login", "host": ["{{base_url}}"], "path": ["login"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Mon profil (me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/me", "host": ["{{base_url}}"], "path": ["me"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Déconnexion (logout)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/logout", "host": ["{{base_url}}"], "path": ["logout"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🧑‍⚕️ Patient",
+      "description": "Connectez-vous en tant que patient avant d'utiliser ces endpoints.\nEmail: patient@gestionmed.ci / password: password",
+      "item": [
+        {
+          "name": "Mes réservations",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/reservations", "host": ["{{base_url}}"], "path": ["reservations"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Créer une réservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"service_id\": 1,\n    \"date_reservation\": \"2026-05-10\",\n    \"heure_reservation\": \"09:30\",\n    \"commentaire\": \"Consultation de routine\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/reservations", "host": ["{{base_url}}"], "path": ["reservations"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Annuler une réservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/reservations/1/cancel", "host": ["{{base_url}}"], "path": ["reservations", "1", "cancel"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "👨‍⚕️ Médecin",
+      "description": "Connectez-vous en tant que médecin avant d'utiliser ces endpoints.\nEmail: dr.konan@gestionmed.ci / password: password",
+      "item": [
+        {
+          "name": "Mes services",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/medecin/services", "host": ["{{base_url}}"], "path": ["medecin", "services"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Réservations de mes patients",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{base_url}}/medecin/reservations", "host": ["{{base_url}}"], "path": ["medecin", "reservations"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Changer statut d'une réservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"statut\": \"confirmée\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/medecin/reservations/1/update-status", "host": ["{{base_url}}"], "path": ["medecin", "reservations", "1", "update-status"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🛠️ Admin",
+      "description": "Connectez-vous en tant qu'admin avant d'utiliser ces endpoints.\nEmail: admin@gestionmed.ci / password: password",
+      "item": [
+        {
+          "name": "Services",
+          "item": [
+            {
+              "name": "Liste des services (admin)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "url": { "raw": "{{base_url}}/admin/services", "host": ["{{base_url}}"], "path": ["admin", "services"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Créer un service",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"titre\": \"Échographie abdominale\",\n    \"description\": \"Examen par ultrasons de l'abdomen\",\n    \"prix\": 25000,\n    \"duree\": 30,\n    \"statut\": \"actif\"\n}"
+                },
+                "url": { "raw": "{{base_url}}/admin/services", "host": ["{{base_url}}"], "path": ["admin", "services"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Modifier un service",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"titre\": \"Consultation Générale — Modifiée\",\n    \"prix\": 8000,\n    \"duree\": 25\n}"
+                },
+                "url": { "raw": "{{base_url}}/admin/services/1", "host": ["{{base_url}}"], "path": ["admin", "services", "1"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Supprimer un service",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "url": { "raw": "{{base_url}}/admin/services/99", "host": ["{{base_url}}"], "path": ["admin", "services", "99"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Assigner un médecin à un service",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"medecin_id\": 2\n}"
+                },
+                "url": { "raw": "{{base_url}}/admin/services/1/assign", "host": ["{{base_url}}"], "path": ["admin", "services", "1", "assign"] }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Réservations",
+          "item": [
+            {
+              "name": "Toutes les réservations",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "url": { "raw": "{{base_url}}/admin/reservations", "host": ["{{base_url}}"], "path": ["admin", "reservations"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Annuler une réservation (admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "url": { "raw": "{{base_url}}/admin/reservations/1/cancel", "host": ["{{base_url}}"], "path": ["admin", "reservations", "1", "cancel"] }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Utilisateurs",
+          "item": [
+            {
+              "name": "Liste des utilisateurs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "url": { "raw": "{{base_url}}/admin/users", "host": ["{{base_url}}"], "path": ["admin", "users"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Changer le rôle d'un utilisateur",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"role\": \"medecin\"\n}"
+                },
+                "url": { "raw": "{{base_url}}/admin/users/5/set-role", "host": ["{{base_url}}"], "path": ["admin", "users", "5", "set-role"] }
+              },
+              "response": []
+            },
+            {
+              "name": "Activer / Désactiver un utilisateur",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Accept", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{token}}" }
+                ],
+                "url": { "raw": "{{base_url}}/admin/users/5/toggle", "host": ["{{base_url}}"], "path": ["admin", "users", "5", "toggle"] }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
